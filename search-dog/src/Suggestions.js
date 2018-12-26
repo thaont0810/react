@@ -47,10 +47,10 @@ class Suggestions extends Component {
     ));
     return (
       <div>
-        <div ref="scroll" style={{ height: "500px", overflow: "auto" }}>
+        <div className="dog-container" ref="scroll">
           <ul className="dog-list">{dogItem}</ul>
         </div>
-        {loading ? <p className='loadmore'>loading more</p> : ""}
+        {loading ? <p className="loadmore">loading more</p> : ""}
         {/* <a 
          className ='loadmore'
          href="#" 

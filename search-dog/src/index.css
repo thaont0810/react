@@ -46,6 +46,10 @@ form {
   border: 1px solid rgb(209, 209, 209);
   outline: none;
 }
+.dog-container {
+  height: 500px;
+  overflow: auto;
+}
 
 .dog-item {
   padding: 10px;
