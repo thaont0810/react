@@ -5,20 +5,39 @@ class Suggestions extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      limit: 10
-    }
+      limit: 10,
+      loading: false
+    };
     this.onLoadMore = this.onLoadMore.bind(this);
   }
 
   onLoadMore() {
     this.setState({
-      limit: this.state.limit + 10
-    })
+      loading: true
+    });
+    setTimeout(() => {
+      this.setState({
+        limit: this.state.limit + 10,
+        loading: false
+      });
+    }, 1000);
+  }
+
+  componentDidMount() {
+    this.refs.scroll.addEventListener("scroll", () => {
+      if (
+        this.refs.scroll.scrollTop + this.refs.scroll.clientHeight >=
+        this.refs.scroll.scrollHeight
+      ) {
+        this.onLoadMore();
+      }
+    });
   }
 
   render() {
     const { predictation } = this.props;
     // console.log(predictation);
+    const { loading } = this.state;
 
     const dogItem = predictation.slice(0, this.state.limit).map(item => (
       <li className="dog-item" key={item.id}>
@@ -28,12 +47,16 @@ class Suggestions extends Component {
     ));
     return (
       <div>
-        <ul className="dog-list">{dogItem}</ul>
-        <a 
+        <div ref="scroll" style={{ height: "500px", overflow: "auto" }}>
+          <ul className="dog-list">{dogItem}</ul>
+        </div>
+        {loading ? <p className='loadmore'>loading more</p> : ""}
+        {/* <a 
          className ='loadmore'
          href="#" 
          onClick={this.onLoadMore}>
-        Load</a>
+        Load
+        </a> */}
       </div>
     );
   }
