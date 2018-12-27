@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { API_DOG_IMAGES, API_DOG_BREED } from "./config/api.js";
-
+import { API_DOG_IMAGES } from "./config/api.js";
 
 class Suggestions extends Component {
   constructor(props) {
@@ -9,6 +8,8 @@ class Suggestions extends Component {
     this.state = {
       limit: 5,
       loading: false,
+      selected: "",
+      // suggestions: this.props.predictation
     };
     this.onLoadMore = this.onLoadMore.bind(this);
   }
@@ -19,7 +20,7 @@ class Suggestions extends Component {
     });
     setTimeout(() => {
       this.setState({
-        limit: this.state.limit + 10,
+        limit: this.state.limit + 5,
         loading: false
       });
     }, 1000);
@@ -34,25 +35,46 @@ class Suggestions extends Component {
         this.onLoadMore();
       }
     });
+    this.getDetail();
   }
-  
 
-  handleDetail() {
-    console.log(2);
-    
+  getListDog() {
+    axios
+      .get(
+        `${API_DOG_IMAGES}?size=med&mime_types=jpg&format=json&has_breeds=true&order=ASC&page=0&limit=100`
+      )
+      .then(responses => {
+        // console.log('a',responses)
+        this.setState({
+          suggestions: responses.data
+        });
+        // console.log("state", responses.data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+
+  getDog(id) {
+  
+  }
+
+  handleDetail(id) {
+    // console.log(id);
+
   }
 
   render() {
     const { predictation } = this.props;
-    console.log(predictation);
+    // console.log(predictation);
     const { loading } = this.state;
 
     const dogItem = predictation.slice(0, this.state.limit).map(item => (
-      <li 
-        className="dog-item" 
-        key={item.id} 
-        onClick = {this.handleDetail.bind(this)}
-        >
+      <li
+        className="dog-item"
+        key={item.id}
+        onClick={this.handleDetail.bind(this, item.id)}
+      >
         <p className="dog-name">{item.name}</p>
         <p className="dog-id">{item.id}</p>
       </li>
