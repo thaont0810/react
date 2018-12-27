@@ -46,17 +46,25 @@ form {
   border: 1px solid rgb(209, 209, 209);
   outline: none;
 }
+
 .dog-container {
-  height: 500px;
+  height: 300px;
   overflow: auto;
 }
 
 .dog-item {
   padding: 10px;
   border-bottom: 1px solid #b4b4b4;
+  cursor: pointer;
 }
 
-.dog-item p {
+.dog-item:hover {
+  background: #dbdbdb;
+}
+
+.dog-item .dog-name {
+  font-size: 20px;
+  font-weight: bold;
   padding-bottom: 10px;
 }
 

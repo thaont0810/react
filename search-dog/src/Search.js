@@ -2,8 +2,7 @@ import React, { Component } from "react";
 // import DogList from "./DogList";
 import axios from "axios";
 import Suggestions from "./Suggestions";
-
-// const API_URL = "https://thedogapi.com/";
+import { API_DOG_IMAGES, API_DOG_BREED } from "./config/api.js";
 
 class Search extends Component {
   constructor(props) {
@@ -17,16 +16,15 @@ class Search extends Component {
     };
     this.handleChange = this.handleChange.bind(this);
   }
-  
+
   componentDidMount() {
-    this.getData()
+    this.getBreed();
+    // this.getDetail();
   }
 
-  getData() {
+  getBreed() {
     axios
-      .get(
-        "https://api.thedogapi.com/v1/images/search?size=med&mime_types=jpg,gif&format=json&has_breeds=true&order=DESC&page=0&limit=100"
-      )
+      .get(`${API_DOG_BREED}?limit=100`)
       .then(({ data }) => {
         this.setState({
           results: data,
@@ -37,25 +35,42 @@ class Search extends Component {
       .catch(err => {
         console.log(err);
       });
-  };
+  }
 
-  getSuggestions(searchWords) {
-    let r = this.state.results.filter(item =>
-      item.breeds[0].name.toLowerCase().indexOf(searchWords.toLowerCase()) !== -1
+  // getDetail() {
+  //   axios
+  //     .get(
+  //       `${API_DOG_IMAGES}?size=med&mime_types=jpg&format=json&has_breeds=true&order=ASC&page=0&limit=100`
+  //     )
+  //     .then(({ data }) => {
+  //       this.setState({
+  //         results: data,
+  //         suggestions: data,
+  //         loading: false
+  //       });
+  //     })
+  //     .catch(err => {
+  //       console.log(err);
+  //     });
+  // }
+
+  getSuggestions(value) {
+    let r = this.state.results.filter(
+      item => item.name.toLowerCase().indexOf(value.toLowerCase()) !== -1
     );
     return r;
   }
 
   handleChange(event) {
     const searchWords = event.target.value;
-    
+
     this.setState({
       searchWords
     });
-    if(searchWords.length > 0) {
+    if (searchWords.length > 0) {
       const predict = this.getSuggestions(searchWords);
       this.setState({
-        suggestions: predict
+        suggestions: predict,
       });
     } else {
       this.setState({
@@ -66,7 +81,8 @@ class Search extends Component {
 
   render() {
     // console.log(this.state.results);
-    const { loading } = this.state;
+    const { loading } = this.props;
+
     return (
       <div className="container">
         <form action="">

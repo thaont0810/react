@@ -1,12 +1,14 @@
 import React, { Component } from "react";
-// import "./suggestion.css";
+import axios from "axios";
+import { API_DOG_IMAGES, API_DOG_BREED } from "./config/api.js";
+
 
 class Suggestions extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      limit: 10,
-      loading: false
+      limit: 5,
+      loading: false,
     };
     this.onLoadMore = this.onLoadMore.bind(this);
   }
@@ -33,16 +35,26 @@ class Suggestions extends Component {
       }
     });
   }
+  
+
+  handleDetail() {
+    console.log(2);
+    
+  }
 
   render() {
     const { predictation } = this.props;
-    // console.log(predictation);
+    console.log(predictation);
     const { loading } = this.state;
 
     const dogItem = predictation.slice(0, this.state.limit).map(item => (
-      <li className="dog-item" key={item.id}>
-        <p className="dog-name">{item.breeds[0].name}</p>
-        <img className="dog-img" src={item.url} alt={item.breeds[0].name} />
+      <li 
+        className="dog-item" 
+        key={item.id} 
+        onClick = {this.handleDetail.bind(this)}
+        >
+        <p className="dog-name">{item.name}</p>
+        <p className="dog-id">{item.id}</p>
       </li>
     ));
     return (
