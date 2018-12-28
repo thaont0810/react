@@ -12,11 +12,13 @@ class Detail extends Component {
           {selected.length > 0 && selected[0].breeds[0].categories}
         </p>
         <p className="detail-id">{selected.length > 0 && selected[0].id}</p>
-        <img
-          className="detail-img"
-          src={selected.length > 0 && selected[0].url }
-          alt=""
-        />
+        {selected[0] && selected[0].url && (
+          <img
+            className="detail-img"
+            src={selected.length > 0 && selected[0].url}
+            alt=""
+          />
+        )}
       </div>
     );
   }

@@ -56,8 +56,15 @@ class Suggestions extends Component {
   }
 
   getDog(id) {
+    // console.log('id', id)
+    // console.log(this.state.dogList.map((i) => i.breeds[0].id));
     let d = this.state.dogList.filter(item => item.breeds[0].id === id);
     return d;
+    // axios.get(`${API_DOG_IMAGES}?breed_id=${id}`).then((r) => {
+    //   this.setState({
+    //     selected: r.data
+    //   });
+    // })
   }
 
   handleDetail(id) {
@@ -66,42 +73,31 @@ class Suggestions extends Component {
     this.setState({
       selected: dog
     });
+    // this.getDog(id);
   }
 
   render() {
-    // console.log(this.state);
     const { predictation } = this.props;
-    const { loading, selected} = this.state;
+    const { loading, selected } = this.state;
 
-    const dogItem = predictation.slice(0, this.state.limit).map(item => (
-      <li
-        className="dog-item"
-        key={item.id}
-        onClick={this.handleDetail.bind(this, item.id)}
-      >
-        <p className="dog-name">{item.name}</p>
-        {/* <p className="dog-id">{item.id}</p> */}
-      </li>
-    ));
+    const dogItem =
+      predictation.length > 0 ? (
+        predictation.slice(0, this.state.limit).map(item => (
+          <li
+            className="dog-item"
+            key={item.id}
+            onClick={this.handleDetail.bind(this, item.id)}
+          >
+            <p className="dog-name">{item.name}</p>
+            {/* <p className="dog-id">{item.id}</p> */}
+          </li>
+        ))
+      ) : (
+        <p>Not Found</p>
+      );
     return (
       <div>
-        {/* <Detail selected={selected} /> */}
-        {
-          <div className="detail-item">
-           
-            <p className="detail-name">
-              {selected.length > 0 &&
-                selected[0].breeds[0].name}
-            </p>
-             {selected[0] && selected[0].url && (
-              <img
-                className="detail-img"
-                src={selected[0].url}
-                alt={selected[0].breeds[0].name}
-              />
-            )}
-          </div>
-        }
+        <Detail selected={selected} />
 
         <div className="dog-container" ref="scroll">
           <ul className="dog-list">{dogItem}</ul>
