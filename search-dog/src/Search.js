@@ -67,6 +67,7 @@ class Search extends Component {
     this.setState({
       searchWords
     });
+    
     if (searchWords.length > 0) {
       const predict = this.getSuggestions(searchWords);
       this.setState({

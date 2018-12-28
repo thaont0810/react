@@ -8,10 +8,23 @@ class Suggestions extends Component {
     this.state = {
       limit: 5,
       loading: false,
-      selected: "",
+      dogList: [],
+      selected: ""
       // suggestions: this.props.predictation
     };
     this.onLoadMore = this.onLoadMore.bind(this);
+  }
+
+  componentDidMount() {
+    this.refs.scroll.addEventListener("scroll", () => {
+      if (
+        this.refs.scroll.scrollTop + this.refs.scroll.clientHeight >=
+        this.refs.scroll.scrollHeight
+      ) {
+        this.onLoadMore();
+      }
+    });
+    this.getDogList();
   }
 
   onLoadMore() {
@@ -26,19 +39,7 @@ class Suggestions extends Component {
     }, 1000);
   }
 
-  componentDidMount() {
-    this.refs.scroll.addEventListener("scroll", () => {
-      if (
-        this.refs.scroll.scrollTop + this.refs.scroll.clientHeight >=
-        this.refs.scroll.scrollHeight
-      ) {
-        this.onLoadMore();
-      }
-    });
-    this.getDetail();
-  }
-
-  getListDog() {
+  getDogList() {
     axios
       .get(
         `${API_DOG_IMAGES}?size=med&mime_types=jpg&format=json&has_breeds=true&order=ASC&page=0&limit=100`
@@ -46,9 +47,9 @@ class Suggestions extends Component {
       .then(responses => {
         // console.log('a',responses)
         this.setState({
-          suggestions: responses.data
+          dogList: responses.data
         });
-        // console.log("state", responses.data);
+        // console.log("dogList", responses.data);
       })
       .catch(err => {
         console.log(err);
@@ -56,12 +57,29 @@ class Suggestions extends Component {
   }
 
   getDog(id) {
-  
+    let d = this.state.dogList.filter(item => item.breeds[0].id === id);
+    return d;
   }
 
   handleDetail(id) {
-    // console.log(id);
-
+    const selected = id;
+    this.setState = {
+      selected: id
+    };
+    // console.log(this.setState.selected);
+    let dog = this.getDog(id);
+    return (
+      <div className="detail-item">
+        <p className="detail-name">dog[0].name</p>
+        {/* <p className="detail-cat">{dog[0].categories}</p>
+        <p className="detail-id">{dog[0].id}</p>
+        <img 
+          className="detail-img" 
+          src= {dog[0].url}
+          alt= {dog[0].breeds[0].name}
+           /> */}
+      </div>
+    );
   }
 
   render() {
