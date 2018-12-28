@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { API_DOG_IMAGES } from "./config/api.js";
+import Detail from "./Detail";
 
 class Suggestions extends Component {
   constructor(props) {
@@ -9,8 +10,7 @@ class Suggestions extends Component {
       limit: 5,
       loading: false,
       dogList: [],
-      selected: ""
-      // suggestions: this.props.predictation
+      selected: []
     };
     this.onLoadMore = this.onLoadMore.bind(this);
   }
@@ -45,7 +45,6 @@ class Suggestions extends Component {
         `${API_DOG_IMAGES}?size=med&mime_types=jpg&format=json&has_breeds=true&order=ASC&page=0&limit=100`
       )
       .then(responses => {
-        // console.log('a',responses)
         this.setState({
           dogList: responses.data
         });
@@ -62,30 +61,17 @@ class Suggestions extends Component {
   }
 
   handleDetail(id) {
-    const selected = id;
-    this.setState = {
-      selected: id
-    };
-    // console.log(this.setState.selected);
+    // const selected = id;
     let dog = this.getDog(id);
-    return (
-      <div className="detail-item">
-        <p className="detail-name">dog[0].name</p>
-        {/* <p className="detail-cat">{dog[0].categories}</p>
-        <p className="detail-id">{dog[0].id}</p>
-        <img 
-          className="detail-img" 
-          src= {dog[0].url}
-          alt= {dog[0].breeds[0].name}
-           /> */}
-      </div>
-    );
+    this.setState({
+      selected: dog
+    });
   }
 
   render() {
+    // console.log(this.state);
     const { predictation } = this.props;
-    // console.log(predictation);
-    const { loading } = this.state;
+    const { loading, selected} = this.state;
 
     const dogItem = predictation.slice(0, this.state.limit).map(item => (
       <li
@@ -94,21 +80,33 @@ class Suggestions extends Component {
         onClick={this.handleDetail.bind(this, item.id)}
       >
         <p className="dog-name">{item.name}</p>
-        <p className="dog-id">{item.id}</p>
+        {/* <p className="dog-id">{item.id}</p> */}
       </li>
     ));
     return (
       <div>
+        {/* <Detail selected={selected} /> */}
+        {
+          <div className="detail-item">
+           
+            <p className="detail-name">
+              {selected.length > 0 &&
+                selected[0].breeds[0].name}
+            </p>
+             {selected[0] && selected[0].url && (
+              <img
+                className="detail-img"
+                src={selected[0].url}
+                alt={selected[0].breeds[0].name}
+              />
+            )}
+          </div>
+        }
+
         <div className="dog-container" ref="scroll">
           <ul className="dog-list">{dogItem}</ul>
         </div>
         {loading ? <p className="loadmore">loading more</p> : ""}
-        {/* <a 
-         className ='loadmore'
-         href="#" 
-         onClick={this.onLoadMore}>
-        Load
-        </a> */}
       </div>
     );
   }

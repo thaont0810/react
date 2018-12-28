@@ -48,7 +48,7 @@ form {
 }
 
 .dog-container {
-  height: 300px;
+  height: 200px;
   overflow: auto;
 }
 
@@ -68,7 +68,7 @@ form {
   padding-bottom: 10px;
 }
 
-.dog-item img {
+.dog-item img, .detail-img {
   width: 200px;
 }
 
