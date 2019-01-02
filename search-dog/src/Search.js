@@ -10,9 +10,11 @@ class Search extends Component {
 
     this.state = {
       searchWords: "",
-      results: [],
+      breedList: [],
       suggestions: [],
-      loading: true
+      loading: true,
+      showSuggestions: false
+
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -26,7 +28,7 @@ class Search extends Component {
       .get(`${API_DOG_BREED}?limit=100`)
       .then(({ data }) => {
         this.setState({
-          results: data,
+          breedList: data,
           suggestions: data,
           loading: false
         });
@@ -37,7 +39,7 @@ class Search extends Component {
   }
 
   getSuggestions(value) {
-    let r = this.state.results.filter(
+    let r = this.state.breedList.filter(
       item => item.name.toLowerCase().indexOf(value.toLowerCase()) !== -1
     );
     return r;
@@ -47,7 +49,8 @@ class Search extends Component {
     const searchWords = event.target.value;
 
     this.setState({
-      searchWords
+      searchWords,
+      showSuggestions: true
     });
 
     if (searchWords.length > 0) {
@@ -57,14 +60,15 @@ class Search extends Component {
       });
     } else {
       this.setState({
-        suggestions: this.state.results
+        // suggestions: this.state.breedList
+        suggestions: []
       });
     }
   }
 
   render() {
     // console.log(this.state.results);
-    const { loading } = this.props;
+    const { loading, showSuggestions } = this.state;
 
     return (
       <div className="container">
@@ -78,11 +82,11 @@ class Search extends Component {
           />
           {/* <p>{this.state.searchWords}</p> */}
         </form>
-        {/* <DogList doglist = {this.state.results}/> */}
-        {!loading ? (
+        {/* <DogList doglist = {this.state.breedList}/> */}
+        {!loading && showSuggestions ? (
           <Suggestions predictation={this.state.suggestions} />
         ) : (
-          <p>Loading...</p>
+          null
         )}
       </div>
     );

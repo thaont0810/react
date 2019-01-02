@@ -10,7 +10,8 @@ class Suggestions extends Component {
       limit: 5,
       loading: false,
       dogList: [],
-      selected: []
+      selected: [],
+      showSugg: false
     };
     this.onLoadMore = this.onLoadMore.bind(this);
   }
@@ -71,7 +72,7 @@ class Suggestions extends Component {
     // const selected = id;
     let dog = this.getDog(id);
     this.setState({
-      selected: dog
+      selected: dog,
     });
     // this.getDog(id);
   }
@@ -80,29 +81,36 @@ class Suggestions extends Component {
     const { predictation } = this.props;
     const { loading, selected } = this.state;
 
-    const dogItem =
-      predictation.length > 0 ? (
-        predictation.slice(0, this.state.limit).map(item => (
-          <li
-            className="dog-item"
-            key={item.id}
-            onClick={this.handleDetail.bind(this, item.id)}
-          >
-            <p className="dog-name">{item.name}</p>
-            {/* <p className="dog-id">{item.id}</p> */}
-          </li>
-        ))
-      ) : (
-        <p>Not Found</p>
-      );
+    // const dogItem =
+
     return (
       <div>
         <Detail selected={selected} />
+      <div>
+      <div className="dog-container" ref="scroll">
+        <ul className="dog-list">
+          {// predictation.length > 0 ? (
+          predictation.slice(0, this.state.limit).map(item => (
+            <li
+              className="dog-item"
+              key={item.id}
+              onClick={this.handleDetail.bind(this, item.id)}
+            >
+              <p className="dog-name">{item.name}</p>
+              {/* <p className="dog-id">{item.id}</p> */}
+            </li>
+          ))
+          // ) : (
+          //   <p>Not Found</p>
+          // )
+          }
+        </ul>
+      </div>
+      {loading ? <p className="loadmore">loading more</p> : ""}
+    </div>
+        
 
-        <div className="dog-container" ref="scroll">
-          <ul className="dog-list">{dogItem}</ul>
-        </div>
-        {loading ? <p className="loadmore">loading more</p> : ""}
+        
       </div>
     );
   }
