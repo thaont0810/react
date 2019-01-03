@@ -10,8 +10,7 @@ class Suggestions extends Component {
       limit: 5,
       loading: false,
       dogList: [],
-      selected: [],
-      showSugg: false
+      selected: []
     };
     this.onLoadMore = this.onLoadMore.bind(this);
   }
@@ -27,6 +26,16 @@ class Suggestions extends Component {
     });
     this.getDogList();
   }
+
+  componentDidUpdate(nextProps) {
+    if (nextProps.predictation !== this.props.predictation) {
+      this.setState({
+        selected: [],
+      }, () => {
+        this.getDogList();
+      })     
+    }
+   }
 
   onLoadMore() {
     this.setState({
@@ -72,7 +81,7 @@ class Suggestions extends Component {
     // const selected = id;
     let dog = this.getDog(id);
     this.setState({
-      selected: dog,
+      selected: dog
     });
     // this.getDog(id);
   }
@@ -81,36 +90,46 @@ class Suggestions extends Component {
     const { predictation } = this.props;
     const { loading, selected } = this.state;
 
-    // const dogItem =
-
+    const dogItem = predictation.length > 0 ? predictation.slice(0, this.state.limit).map(item => (
+      <li
+        className="dog-item"
+        key={item.id}
+        onClick={this.handleDetail.bind(this, item.id)}
+      >
+        <p className="dog-name">{item.name}</p>
+        {/* <p className="dog-id">{item.id}</p> */}
+      </li>
+    )) : <p>Not Found</p>;
     return (
       <div>
         <Detail selected={selected} />
-      <div>
-      <div className="dog-container" ref="scroll">
-        <ul className="dog-list">
-          {// predictation.length > 0 ? (
-          predictation.slice(0, this.state.limit).map(item => (
-            <li
-              className="dog-item"
-              key={item.id}
-              onClick={this.handleDetail.bind(this, item.id)}
-            >
-              <p className="dog-name">{item.name}</p>
-              {/* <p className="dog-id">{item.id}</p> */}
-            </li>
-          ))
-          // ) : (
-          //   <p>Not Found</p>
-          // )
-          }
-        </ul>
-      </div>
-      {loading ? <p className="loadmore">loading more</p> : ""}
-    </div>
-        
-
-        
+        {/* {
+          <div className="detail-item">
+           
+            <p className="detail-name">
+              {selected.length > 0 &&
+                selected[0].breeds[0].name}
+            </p>
+             {selected[0] && selected[0].url && (
+              <img
+                className="detail-img"
+                src={selected[0].url}
+                alt={selected[0].breeds[0].name}
+              />
+            )}
+          </div>
+        } */}
+        <div>
+          {selected && selected.length === 0 && (
+            <div className="dog-container" ref="scroll">
+            <ul className="dog-list">
+              {dogItem}
+            </ul>
+          </div>
+          )}
+          
+          {loading ? <p className="loadmore">loading more</p> : ""}
+        </div>
       </div>
     );
   }

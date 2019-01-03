@@ -14,7 +14,6 @@ class Search extends Component {
       suggestions: [],
       loading: true,
       showSuggestions: false
-
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -29,7 +28,7 @@ class Search extends Component {
       .then(({ data }) => {
         this.setState({
           breedList: data,
-          suggestions: data,
+          // suggestions: data,
           loading: false
         });
       })
@@ -49,19 +48,20 @@ class Search extends Component {
     const searchWords = event.target.value;
 
     this.setState({
-      searchWords,
-      showSuggestions: true
+      searchWords
     });
 
     if (searchWords.length > 0) {
       const predict = this.getSuggestions(searchWords);
       this.setState({
         suggestions: predict,
+        showSuggestions: true
       });
     } else {
       this.setState({
         // suggestions: this.state.breedList
-        suggestions: []
+        suggestions: [],
+        // showSuggestions: false
       });
     }
   }
@@ -85,9 +85,7 @@ class Search extends Component {
         {/* <DogList doglist = {this.state.breedList}/> */}
         {!loading && showSuggestions ? (
           <Suggestions predictation={this.state.suggestions} />
-        ) : (
-          null
-        )}
+        ) : null}
       </div>
     );
   }
