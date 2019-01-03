@@ -4,6 +4,7 @@ import DogDetail from "./components/DogDetail";
 import Search from "./components/Search";
 import { API_DOG_IMAGES, API_DOG_BREED } from "./config/api.js";
 import axios from "axios";
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -63,9 +64,9 @@ class App extends Component {
     let { selectedBreed, breedInfo } = this.state;
     if (!breedInfo && !selectedBreed) return {};
     let breedDetail = breedInfo.find(item => {
-      return item.breeds[0].id === selectedBreed
+      return item.breeds[0].id === selectedBreed;
     });
-    return breedDetail
+    return breedDetail;
   };
 
   render() {
