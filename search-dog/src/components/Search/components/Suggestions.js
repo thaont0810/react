@@ -5,9 +5,7 @@ class Suggestions extends Component {
     super(props);
     this.state = {
       limit: 5,
-      loading: false,
-      dogList: [],
-      selected: []
+      loading: false
     };
     this.onLoadMore = this.onLoadMore.bind(this);
     this.ref = React.createRef();
@@ -33,22 +31,6 @@ class Suggestions extends Component {
     }, 1000);
   }
 
-  getDogList() {}
-
-  getDog(id) {
-    let d = this.state.dogList.filter(item => item.breeds[0].id === id);
-    return d;
-  }
-
-  handleDetail(id) {
-    // const selected = id;
-    let dog = this.getDog(id);
-    this.setState({
-      selected: dog
-    });
-    // this.getDog(id);
-  }
-
   render() {
     const { predictation, handleSelectBreed } = this.props;
     const { loading } = this.state;
@@ -62,7 +44,6 @@ class Suggestions extends Component {
             onClick={() => {handleSelectBreed(item)}}
           >
             <p className="dog-name">{item.name}</p>
-            {/* <p className="dog-id">{item.id}</p> */}
           </li>
         ))
       ) : (

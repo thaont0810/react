@@ -71,6 +71,7 @@ class App extends Component {
 
   render() {
     let { breedList } = this.state;
+    
     return (
       <div className="App">
         <Search
