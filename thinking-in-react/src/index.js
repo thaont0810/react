@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import * as serviceWorker from "./serviceWorker";
-import FilterableProductTable from "./FilterableProductTable";
+import ProductTable from "./component/Table/FilterableProductTable";
 
 const PRODUCTS = [
   {
@@ -44,7 +44,7 @@ const PRODUCTS = [
 ];
 
 ReactDOM.render(
-  <FilterableProductTable products = {PRODUCTS}/>,
+  <ProductTable products = {PRODUCTS}/>,
   document.getElementById("container")
 );
 
