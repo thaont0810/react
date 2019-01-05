@@ -3,14 +3,15 @@ import ProductCategoryRow from "./ProductCategoryRow";
 import ProductRow from "./ProductRow";
 
 class ProductTable extends Component {
+
   render() {
-    const { products, filterText, inStock} = this.props;
+    const { products, filterText, inStock } = this.props;
+
     const rows = [];
     let lastCate = null;
-    
 
     products.forEach(product => {
-      if (product.name.indexOf(filterText) === -1) {
+      if(product.name.indexOf(filterText) === -1) {
         return;
       }
 

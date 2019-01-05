@@ -4,7 +4,7 @@ class SearchBar extends Component {
   constructor(props) {
     super(props);
     this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleInStockChange = this.handleInStockChange.bind(this)
+    this.handleInStockChange = this.handleInStockChange.bind(this);
   }
 
   handleInputChange(e) {
@@ -16,20 +16,20 @@ class SearchBar extends Component {
   }
 
   render() {
-    const {filterText, inStock } = this.props;
+    const {filterText, inStock} = this.props;
+    
     return (
       <form>
         <input 
           type="text" 
           placeholder= 'Search ...'
           value = {filterText}
-          onChange ={this.handleInputChange}/>
+          onChange = {this.handleInputChange}/>
         <p>
           <input 
-            type="checkbox"
+            type="checkbox" 
             checked = {inStock}
-            onChange= {this.handleInStockChange}/>
-          Only show products in stock
+            onChange = {this.handleInStockChange}/>Only show products in stock
         </p>
       </form>
     )

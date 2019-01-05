@@ -7,40 +7,42 @@ class FilterableProductTable extends Component {
     super(props);
 
     this.state = {
-      filterText: "",
+      filterText: '',
       inStock: false
-    };
-    this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleInStockChange = this.handleInStockChange.bind(this)
+    }
 
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleInStockChange = this.handleInStockChange.bind(this);
   }
 
-  handleInputChange (filterText) {
+  handleInputChange(filterText) {
     this.setState({
-      filterText: filterText
+      filterText
     })
   }
 
   handleInStockChange(inStock) {
     this.setState({
-      inStock: inStock
+      inStock
     })
   }
+
   render() {
     const { products } = this.props;
-    const { filterText, inStock } = this.state;
+    const {filterText, inStock} = this.state;
 
     return (
       <div>
         <SearchBar 
-          filterText={filterText} 
-          inStock={inStock} 
+          filterText = {filterText}
+          inStock = {inStock}
           onInputChange = {this.handleInputChange}
-          onInStockChange = {this.handleInStockChange}/>
+          onInStockChange = {this.handleInStockChange}
+         />
         <ProductTable
           products={products}
-          filterText={filterText}
-          inStock={inStock}
+          filterText = {filterText}
+          inStock = {inStock}
         />
       </div>
     );
