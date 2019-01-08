@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./App.css";
 import TaskTable from "./components/Table/TaskTable";
 import AddTask from "./components/AddTask";
-import FilterList from "./components/FilterList";
+import SearchBar from "./components/SearchBar";
 import Action from "./components/Action";
 
 class ToDo extends Component {
@@ -11,22 +11,20 @@ class ToDo extends Component {
     this.state = {
       filter: '',
       newTask: '',
-      initialTasks: []
+      initialTasks: this.props.tasks
     };
     this.handleFilter = this.handleFilter.bind(this);
-    // this.addTask = this.addTask.bind(this);
-  }
-
-  componentDidMount() {
-    this.setState({
-      initialTasks: this.props.tasks
-    })
+    // this.handleAddTask = this.handleAddTask.bind(this);
   }
 
   handleFilter(filter) {
     this.setState({
       filter
     })
+  }
+
+  addTask(e) {
+
   }
 
   render() {
@@ -39,9 +37,9 @@ class ToDo extends Component {
         <header>
           <h1>React To-Do App</h1>
         </header>
-        <AddTask addTask = {this.addTask}/>
+        <AddTask onAddTask = {this.handleAddTask}/>
         <br />
-        <FilterList 
+        <SearchBar 
           filter = {filter}
           onFilterChange = {this.handleFilter}
           />
