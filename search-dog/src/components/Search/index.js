@@ -1,44 +1,19 @@
 import React, { Component } from "react";
-// import DogList from "./DogList";
-import axios from "axios";
-import Suggestions from "./Suggestions";
-import { API_DOG_BREED } from "./config/api.js";
+import Suggestions from "./components/Suggestions";
 
 class Search extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       searchWords: "",
-      breedList: [],
-      suggestions: [],
-      loading: true,
-      showSuggestions: false
+      showSuggestions : false
     };
     this.handleChange = this.handleChange.bind(this);
   }
 
-  componentDidMount() {
-    this.getBreed();
-  }
-
-  getBreed() {
-    axios
-      .get(`${API_DOG_BREED}?limit=100`)
-      .then(({ data }) => {
-        this.setState({
-          breedList: data,
-          // suggestions: data,
-          loading: false
-        });
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  }
-
   getSuggestions(value) {
-    let r = this.state.breedList.filter(
+    let {breedList} = this.props;
+    let r = breedList.filter(
       item => item.name.toLowerCase().indexOf(value.toLowerCase()) !== -1
     );
     return r;
@@ -46,7 +21,6 @@ class Search extends Component {
 
   handleChange(event) {
     const searchWords = event.target.value;
-
     this.setState({
       searchWords
     });
@@ -55,21 +29,28 @@ class Search extends Component {
       const predict = this.getSuggestions(searchWords);
       this.setState({
         suggestions: predict,
-        showSuggestions: true
+        showSuggestions : true
       });
     } else {
       this.setState({
-        // suggestions: this.state.breedList
         suggestions: [],
-        // showSuggestions: false
+        showSuggestions : false
       });
     }
   }
 
-  render() {
-    // console.log(this.state.results);
-    const { loading, showSuggestions } = this.state;
+  handleSelectBreed = (breedObj) => {
+    let {handleSelectBreed} = this.props;
+    this.setState({
+      showSuggestions : false,
+      searchWords : breedObj.name
+    });
+    handleSelectBreed(breedObj.id);
+  }
 
+  render() {
+    const { showSuggestions, suggestions } = this.state;
+    let {handleSelectBreed} = this.props;
     return (
       <div className="container">
         <form action="">
@@ -80,11 +61,10 @@ class Search extends Component {
             value={this.state.searchWords}
             onChange={this.handleChange}
           />
-          {/* <p>{this.state.searchWords}</p> */}
         </form>
-        {/* <DogList doglist = {this.state.breedList}/> */}
-        {!loading && showSuggestions ? (
-          <Suggestions predictation={this.state.suggestions} />
+
+        {showSuggestions ? (
+          <Suggestions predictation={suggestions} handleSelectBreed={this.handleSelectBreed}/>
         ) : null}
       </div>
     );
