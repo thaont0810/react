@@ -4,7 +4,7 @@ class TaskItem extends Component {
   
   handleRemoveTask = () => {
     const index = this.props.index;
-    this.props.onRemoveTask(index);
+    this.props.removeTask(index);
   }
 
   render() {

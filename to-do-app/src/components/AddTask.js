@@ -4,40 +4,44 @@ class AddTask extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      newTask: ''
-    }
+      newTask: ""
+    };
   }
 
-  handleInputChange = (e) => {
+  handleInputChange = e => {
     this.setState({
       newTask: e.target.value
-    })
-  }
+    });
+  };
 
-  handleAddTask = (e) => {
+  handleAddTask = e => {
     e.preventDefault();
-    if (this.state.newTask.length > 0) {
-      this.props.addNewTask(this.state.newTask);
-      this.setState({ newTask: '' });
+    let {newTask} = this.state;
+    if (newTask.length > 0) {
+      this.props.addNewTask(newTask);
+      this.setState({
+        newTask: ""
+      });
     }
-  }
+  };
 
   render() {
+    const {newTask} = this.state;
+    
     return (
       <form>
         <input
-          className='input'
-          type="text" 
-          placeholder = 'add new task'
-          value={this.state.newTask}
-          onChange = {this.handleInputChange}
-          />
-        <button 
-          type='submit'
-          onClick = {this.handleAddTask}
-          >Enter New Task</button>
+          className="input"
+          type="text"
+          placeholder="add new task"
+          value={newTask}
+          onChange={this.handleInputChange}
+        />
+        <button type="submit" onClick={this.handleAddTask}>
+          Enter New Task
+        </button>
       </form>
-    )
+    );
   }
 }
 

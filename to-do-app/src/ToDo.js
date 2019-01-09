@@ -19,7 +19,8 @@ class ToDo extends Component {
     super(props);
     this.state = {
       filter: '',
-      tasks: initTasks.slice(0)
+      tasks: initTasks.slice(0),
+      // item : 0
     };
   }
 
@@ -35,15 +36,31 @@ class ToDo extends Component {
     this.setState({tasks})
   }
 
-  resetList = () => {
-    this.setState({
-      tasks : initTasks
-    });
-  }
-
   clearList = () => {
     this.setState({
       tasks: []
+    })
+  }
+
+  resetList = () => {
+    this.setState({
+      tasks : initTasks.slice(0)
+    });
+  }
+
+  removeTask = (itemIndex) => {
+    let {tasks} = this.state;
+    tasks.splice(itemIndex, 1);
+    this.setState({
+      tasks
+    });
+  }
+
+  insertTask = (item) => {
+    let {tasks} = this.state;
+    tasks.push(item.toString())
+    this.setState({
+      tasks, 
     })
   }
 
@@ -64,11 +81,13 @@ class ToDo extends Component {
         <br />
         <TaskTable 
           tasks={tasks}
-          filter ={filter} />
+          filter ={filter}
+          removeTask = {this.removeTask} />
         <br/>
         <Action 
           clearList = {this.clearList}
-          resetList={this.resetList} 
+          resetList={this.resetList}
+          insertTask = {this.insertTask} 
           />
       </div>
     );

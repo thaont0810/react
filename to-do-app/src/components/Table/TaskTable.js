@@ -2,19 +2,6 @@ import React, { Component } from "react";
 import TaskItem from "./TaskItem";
 
 class TaskTable extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      initialTasks: this.props.tasks
-    };
-  }
-
-  handleRemoveTask = (itemIndex) => {
-    this.state.initialTasks.splice(itemIndex, 1);
-    this.setState({
-      initialTasks: this.props.tasks
-    });
-  }
 
   render() {
     const { tasks, filter } = this.props;
@@ -28,7 +15,7 @@ class TaskTable extends Component {
           task = {task} 
           index ={index} 
           key = {index} 
-          onRemoveTask = {this.handleRemoveTask}/>
+          removeTask = {this.props.removeTask}/>
       )
     })
 
