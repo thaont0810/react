@@ -2,14 +2,8 @@ import React, { Component } from "react";
 
 class AddTask extends Component {
   constructor(props) {
-    super(props);
-    this.addTask = this.addTask.bind(this);
+    super(props)
   }
-
-  addTask () {
-    
-  }
-
   render() {
     return (
       <form>

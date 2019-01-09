@@ -15,6 +15,7 @@ class TaskTable extends Component {
       if (task.toLowerCase().indexOf(filter) === -1) {
         return;
       }
+      
 
       rows.push(
         <TaskRow 

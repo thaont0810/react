@@ -11,17 +11,17 @@ class ToDo extends Component {
     this.state = {
       filter: '',
       newTask: '',
-      initialTasks: []
+      initialTasks: this.props.tasks
     };
     this.handleFilter = this.handleFilter.bind(this);
     // this.addTask = this.addTask.bind(this);
   }
 
-  componentDidMount() {
-    this.setState({
-      initialTasks: this.props.tasks
-    })
-  }
+  // componentDidMount() {
+  //   this.setState({
+  //     initialTasks: this.props.tasks
+  //   })
+  // }
 
   handleFilter(filter) {
     this.setState({
