@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 
-class FilterList extends Component {
+class SearchBar extends Component {
   constructor(props){
     super(props);
     this.handleFilter = this.handleFilter.bind(this);
@@ -27,4 +27,4 @@ class FilterList extends Component {
   }
 }
 
-export default FilterList;
+export default SearchBar;

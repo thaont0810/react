@@ -1,31 +1,36 @@
 import React, { Component } from "react";
-import TaskRow from "./TaskRow";
+import TaskItem from "./TaskItem";
 
 class TaskTable extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      initialTasks: this.props.tasks
+    };
+  }
 
+  handleRemoveTask = (itemIndex) => {
+    this.state.initialTasks.splice(itemIndex, 1);
+    this.setState({
+      initialTasks: this.props.tasks
+    });
   }
 
   render() {
     const { tasks, filter } = this.props;
-    const rows = [];
 
-    tasks.map((task, index) => {
+    const taskItem = tasks.map((task, index) => {
       if (task.toLowerCase().indexOf(filter) === -1) {
         return;
       }
-      
-
-      rows.push(
-        <TaskRow 
-          task={task} 
-          index={index} 
-          key= {index}
-          // delTask = {this.delTask}
-          />
-      );
-    });
+      return (
+        <TaskItem 
+          task = {task} 
+          index ={index} 
+          key = {index} 
+          onRemoveTask = {this.handleRemoveTask}/>
+      )
+    })
 
     return (
       <table>
@@ -36,7 +41,7 @@ class TaskTable extends Component {
             <th>(x)</th>
           </tr>
         </thead>
-        <tbody>{rows}</tbody>
+        <tbody>{taskItem}</tbody>
       </table>
     );
   }
