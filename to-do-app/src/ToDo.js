@@ -6,61 +6,71 @@ import SearchBar from "./components/SearchBar";
 import Action from "./components/Action";
 
 const initTasks = [
-  'Finish Redux Tutorials',
-  'Learn more about Relay',
-  'Build 5 more React apps',
-  'Review React Component Lifecycle',
-  'Obtain Data Visualization Certificate',
-  'Review Algorithms',
-]
+  "Finish Redux Tutorials",
+  "Learn more about Relay",
+  "Build 5 more React apps",
+  "Review React Component Lifecycle",
+  "Obtain Data Visualization Certificate",
+  "Review Algorithms"
+];
 
 class ToDo extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      filter: '',
-      tasks: initTasks.slice(0),
+      filter: "",
+      tasks: initTasks.slice(0)
       // item : 0
     };
   }
 
-  handleFilter = (filter) => {
+  handleFilter = filter => {
     this.setState({
       filter
-    })
-  }
+    });
+  };
 
-  addNewTask = (task) => {
-    let {tasks} = this.state;
-    tasks.push(task)
-    this.setState({tasks})
-  }
+  addNewTask = task => {
+    let { tasks } = this.state;
+    tasks.push(task);
+    this.setState({ tasks });
+  };
 
   clearList = () => {
     this.setState({
       tasks: []
-    })
-  }
+    });
+  };
 
   resetList = () => {
     this.setState({
-      tasks : initTasks.slice(0)
+      tasks: initTasks.slice(0)
     });
-  }
+  };
 
-  removeTask = (itemIndex) => {
-    let {tasks} = this.state;
+  removeTask = itemIndex => {
+    let { tasks } = this.state;
     tasks.splice(itemIndex, 1);
     this.setState({
       tasks
     });
-  }
+  };
 
-  insertTask = (item) => {
-    let {tasks} = this.state;
-    tasks.push(item.toString())
+  insertTask = item => {
+    let { tasks } = this.state;
+    tasks.push(item.toString());
     this.setState({
-      tasks, 
+      tasks
+    });
+  };
+
+  sortList = () => {
+    let { tasks } = this.state;
+    tasks.sort().sort((a, b) => {
+      return a -b ;
+    });
+    this.setState({
+      tasks
     })
   }
 
@@ -74,21 +84,16 @@ class ToDo extends Component {
         </header>
         <AddTask addNewTask={this.addNewTask} />
         <br />
-        <SearchBar 
-          filter = {filter}
-          onFilterChange = {this.handleFilter}
-          />
+        <SearchBar filter={filter} onFilterChange={this.handleFilter} />
         <br />
-        <TaskTable 
-          tasks={tasks}
-          filter ={filter}
-          removeTask = {this.removeTask} />
-        <br/>
-        <Action 
-          clearList = {this.clearList}
+        <TaskTable tasks={tasks} filter={filter} removeTask={this.removeTask} />
+        <br />
+        <Action
+          clearList={this.clearList}
           resetList={this.resetList}
-          insertTask = {this.insertTask} 
-          />
+          insertTask={this.insertTask}
+          sortList = {this.sortList}
+        />
       </div>
     );
   }
