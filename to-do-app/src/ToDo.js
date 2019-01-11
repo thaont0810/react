@@ -66,9 +66,7 @@ class ToDo extends Component {
 
   sortList = () => {
     let { tasks } = this.state;
-    tasks.sort().sort((a, b) => {
-      return a -b ;
-    });
+    tasks.sort()
     this.setState({
       tasks
     })

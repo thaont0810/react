@@ -4,10 +4,9 @@ import React, { Component } from "react";
 class SearchBar extends Component {
   constructor(props){
     super(props);
-    this.handleFilter = this.handleFilter.bind(this);
   }
 
-  handleFilter(e) {
+  handleFilter = (e) => {
     this.props.onFilterChange(e.target.value);
   }
 
