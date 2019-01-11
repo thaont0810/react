@@ -1,0 +1,13 @@
+.App {
+  text-align: center;
+}
+.question {
+  background: #f1f1f1;
+}
+
+.button {
+  background: rgb(243, 186, 79);
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+}
