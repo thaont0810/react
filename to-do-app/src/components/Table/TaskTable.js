@@ -7,9 +7,10 @@ class TaskTable extends Component {
     const { tasks, filter } = this.props;
 
     const taskItem = tasks.map((task, index) => {
-      if (task.toLowerCase().indexOf(filter.toLowerCase()) === -1) {
+      if (task.toLowerCase().indexOf(filter.trim().toLowerCase()) === -1) {
         return;
       }
+      
       return (
         <TaskItem 
           task = {task} 

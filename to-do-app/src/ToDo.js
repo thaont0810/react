@@ -17,11 +17,22 @@ const initTasks = [
 class ToDo extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       filter: "",
       tasks: initTasks.slice(0)
       // item : 0
     };
+  }
+
+  componentDidMount() {
+    let { tasks } = this.state;
+    if (!localStorage.getItem("todo")) {
+      localStorage.setItem("todo", JSON.stringify(tasks));
+    } else {
+      tasks = JSON.parse( localStorage.getItem( "todo" ) );
+      this.setState({ tasks });
+    }
   }
 
   handleFilter = filter => {
@@ -34,17 +45,22 @@ class ToDo extends Component {
     let { tasks } = this.state;
     tasks.push(task);
     this.setState({ tasks });
+    localStorage.setItem('todo', JSON.stringify(tasks));
   };
 
   clearList = () => {
     this.setState({
       tasks: []
+    }, () => {
+      localStorage.setItem('todo', JSON.stringify(this.state.tasks))
     });
   };
 
-  resetList = () => {
+  resetList = () => {    
     this.setState({
       tasks: initTasks.slice(0)
+    }, () => {
+      localStorage.setItem('todo', JSON.stringify(this.state.tasks))
     });
   };
 
@@ -54,6 +70,7 @@ class ToDo extends Component {
     this.setState({
       tasks
     });
+    localStorage.setItem('todo', JSON.stringify(this.state.tasks));
   };
 
   insertTask = item => {
@@ -62,15 +79,21 @@ class ToDo extends Component {
     this.setState({
       tasks
     });
+    localStorage.setItem('todo', JSON.stringify(this.state.tasks));
   };
 
   sortList = () => {
     let { tasks } = this.state;
-    tasks.sort()
+    tasks
+      .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))
+      .sort((a, b) => {
+        return a - b;
+      });
     this.setState({
       tasks
-    })
-  }
+    });
+    localStorage.setItem('todo', JSON.stringify(this.state.tasks));
+  };
 
   render() {
     const { tasks, filter } = this.state;
@@ -90,7 +113,7 @@ class ToDo extends Component {
           clearList={this.clearList}
           resetList={this.resetList}
           insertTask={this.insertTask}
-          sortList = {this.sortList}
+          sortList={this.sortList}
         />
       </div>
     );
