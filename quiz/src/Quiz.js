@@ -1,24 +1,35 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 
 class Quiz extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      answer: -1
+      option: -1
     };
   }
 
-  handleOnchangeAnswer = answer => {
+  handleOnchangeAnswer = option => {
     this.setState({
-      answer
+      option
     });
   };
 
   handleNextQuestionClick = e => {
     e.preventDefault();
     let { nextQuestion } = this.props;
-    let { answer } = this.state;
-    nextQuestion(answer);
+    let { option } = this.state;
+    nextQuestion(option);
+    this.props.getTotalCorrect();
+    this.props.getNotDone();
+  };
+
+  handlePrevQuestionClick = e => {
+    e.preventDefault();
+    let { prevQuestion } = this.props;
+    let { option } = this.state;
+    prevQuestion(option);
+    this.props.getTotalCorrect();
+    this.props.getNotDone();
   };
 
   render() {
@@ -30,28 +41,35 @@ class Quiz extends Component {
             <span>{quiz.id}.</span>
             {quiz.name}
           </p>
-          {quiz.options.map((option, index) => {
-            return (
-              <li
-                key={index}
-                onClick={() => {
-                  this.handleOnchangeAnswer(index);
-                }}
-              >
-                <label htmlFor={option}>
-                  <input
-                    type="radio"
-                    onChange={() => {}}
-                    checked={this.state.answer === index ? true : false}
-                  />{" "}
-                  {option}
-                </label>
-              </li>
-            );
-          })}
-          <button className="button" onClick={this.handleNextQuestionClick}>
-            Next
-          </button>
+          <ul>
+            {quiz.options.map((option, index) => {
+              return (
+                <li
+                  key={index}
+                  onClick={() => {
+                    this.handleOnchangeAnswer(index);
+                  }}
+                >
+                  <label>
+                    <input
+                      type="radio"
+                      onChange={() => {}}
+                      checked={this.state.option === index ? true : false}
+                    />
+                    {option}
+                  </label>
+                </li>
+              );
+            })}
+          </ul>
+          <div>
+            <button className="button" onClick={this.handlePrevQuestionClick}>
+              Prev
+            </button>
+            <button className="button" onClick={this.handleNextQuestionClick}>
+              Next
+            </button>
+          </div>
         </div>
       );
     } else {

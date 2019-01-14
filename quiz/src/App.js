@@ -14,36 +14,83 @@ class App extends Component {
     };
   }
 
-  nextQuestion = answerId => {
-    this.changeAnswer(this.state.current, answerId);
+  nextQuestion = optionId => {
+    this.changeAnswer(this.state.current, optionId);
     this.setState({
       current: this.state.current + 1
     });
   };
 
-  changeAnswer = (questionId, answer) => {
+  prevQuestion = optionId => {
+    this.changeAnswer(this.state.current, optionId);
+    if (this.state.current === 0) {
+    } else {
+      this.setState({
+        current: this.state.current - 1
+      });
+    }
+  };
+
+  changeAnswer = (questionId, option) => {
     let { listAnswer } = this.state;
-    listAnswer[questionId] = answer;
+    listAnswer[questionId] = option;
     this.setState({ listAnswer });
   };
 
-  render() {
-    const { listAnswer, current } = this.state;
-    console.log(listAnswer);
-    return (
-      <div className="App">
-        {this.state.listQuiz.map((quiz, index) => (
-          <Quiz
-            nextQuestion={this.nextQuestion}
-            key={index}
-            isActive={index == current ? true : false}
-            quiz={quiz}
-          />
-        ))}
+  getTotalCorrect = () => {
+    let { listQuiz, listAnswer } = this.state;
+    const correct = listAnswer.filter((item, index) => {
+      return item === listQuiz[index].correct;
+    });
+    // console.log(filter.length);
+    this.setState({
+      correct
+    });
+  };
 
-        <p>Total {this.state.total} questions</p>
-      </div>
-    );
+  getNotDone = () => {
+    let { listAnswer } = this.state;
+    const notChosen = listAnswer.filter(item => {
+      return item === -1;
+    });
+    this.setState({
+      notChosen
+    });
+  };
+
+  render() {
+    const { listAnswer, current, total } = this.state;
+    // console.log("listAnswer", listAnswer);
+
+    if (current < total) {
+      return (
+        <div className="App">
+          {this.state.listQuiz.map((quiz, index) => (
+            <Quiz
+              getNotDone={this.getNotDone}
+              prevQuestion={this.prevQuestion}
+              nextQuestion={this.nextQuestion}
+              getTotalCorrect={this.getTotalCorrect}
+              key={index}
+              isActive={index === current ? true : false}
+              quiz={quiz}
+            />
+          ))}
+          <p>You are in question {current + 1}</p>
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <p>Finished!</p>
+          <p>
+            Correct: {this.state.correct.length} / Total {total}
+            questions
+          </p>
+          <p> You missed {this.state.notChosen.length} questions</p>
+        </div>
+      );
+    }
   }
 }
 

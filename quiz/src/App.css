@@ -1,6 +1,7 @@
 .App {
   text-align: center;
 }
+
 .question {
   background: #f1f1f1;
 }
@@ -10,4 +11,5 @@
   border: none;
   padding: 10px;
   cursor: pointer;
+  margin: 5px;
 }
