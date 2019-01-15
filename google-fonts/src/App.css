@@ -1,0 +1,157 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+ul li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+.container {
+  margin: 50px;
+  display: flex;
+}
+
+.list {
+  margin-top: 50px;
+  width: 1300px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.item {
+  width: calc(25% - 30px);
+  height: 400px;
+  margin-right: 20px;
+  padding-bottom: 10px;
+  border-top: 1px solid rgb(129, 129, 129);
+}
+
+.preview-header h1 {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  color: rgba(0, 0, 0, 0.87);
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+
+.preview-control {
+  display: flex;
+  -webkit-align-items: center;
+  align-items: center;
+  color: #ff5252;
+  font-weight: 500;
+}
+
+.preview-variants {
+  cursor: pointer;
+  display: block;
+  padding: 10px;
+  border: 1px solid #e3e3e3;
+  border-radius: 3px;
+  background-color: #fff;
+  color: rgba(255, 82, 82, 0.87);
+  font-size: 12px;
+  font-weight: 600;
+
+}
+
+.preview-variants option {
+  padding: 0 4px;
+  font-weight: 600;
+
+}
+
+.content {
+  padding: 10px 0;
+  font-size: 40px
+}
+
+/* search */
+.search {
+  border-left: 1px solid #dadada;
+  padding: 0 10px 10px 20px;
+}
+
+.input {
+  font-size: 15px;
+  outline: none;
+  padding-left: 12px;
+  border: 0;
+  border-bottom: 1px solid #dadada;
+  height: 40px;
+}
+
+.search-panel {
+  margin-top: 10px;
+}
+
+
+.search-panel p {
+  color: rgba(0, 0, 0, 0.54);
+  font-size: 14px;
+  font-weight: 500;
+  margin: 20px 0 10px;
+}
+
+.search-panel li {
+  padding: 10px 0;
+}
+
+.styled-checkbox {
+  position: absolute;
+  opacity: 0;
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.12);
+}
+
+.styled-checkbox+label {
+  position: relative;
+  cursor: pointer;
+  padding: 0;
+}
+
+.styled-checkbox+label:before {
+  content: '';
+  margin-right: 10px;
+  display: inline-block;
+  vertical-align: text-top;
+  width: 20px;
+  height: 20px;
+  background: white;
+  border: 2px solid rgb(182, 182, 182);
+  border-radius: 2px;
+}
+
+.styled-checkbox:checked+label {
+  color: rgba(255, 82, 82, 0.87);
+}
+
+.styled-checkbox:checked+label:before {
+  background: rgba(255, 82, 82, 0.87);
+  border: 2px solid rgba(255, 82, 82, 0.87);
+}
+
+.styled-checkbox:checked+label:after {
+  content: '';
+  position: absolute;
+  left: 7px;
+  top: 10px;
+  background: white;
+  width: 2px;
+  height: 2px;
+  box-shadow:
+    2px 0 0 white,
+    4px 0 0 white,
+    4px -2px 0 white,
+    4px -4px 0 white,
+    4px -6px 0 white,
+    4px -8px 0 white;
+  transform: rotate(45deg);
+}
