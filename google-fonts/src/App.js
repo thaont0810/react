@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
 import axios from "axios";
-import Font from "./Font";
+import ListFont from "./ListFont";
 import Search from "./Search";
 import { API_FONTS } from "./FontApi";
 
@@ -36,7 +36,7 @@ class App extends Component {
 
     return (
       <div className="container">
-        <Font listFont={listFont} />
+        <ListFont listFont={listFont} />
         <Search />
       </div>
     );
