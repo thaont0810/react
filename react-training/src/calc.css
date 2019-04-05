@@ -1,0 +1,46 @@
+
+.container {
+    width: 400px;
+    margin: 100px auto;
+}
+
+button {
+    padding: 30px;
+    width: 100px;
+    cursor: pointer;
+    outline: none;
+    border: 1px solid #fff;
+    -webkit-transition: 0.2s ease-in-out;
+    -moz-transition: 0.2s ease-in-out;
+    -ms-transition: 0.2s ease-in-out;
+    -o-transition: 0.2s ease-in-out;
+    transition: 0.2s ease-in-out;
+}
+
+button:hover {
+    background: bisque;
+}
+
+.result {
+    width: 100%;
+    padding: 30px;
+    text-align: right;
+    background: #afb9ff;
+    height: 90px;
+}
+
+.num {
+}
+
+.reset {
+    width: 200px;
+}
+
+.oper {
+    background: #ffe589;
+}
+
+
+.zero {
+    width: 300px;
+}
