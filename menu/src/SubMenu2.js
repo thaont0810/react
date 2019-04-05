@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 class SubMenu extends Component {
   constructor(props) {
@@ -17,11 +18,18 @@ class SubMenu extends Component {
           {menu && menu.dropdown && menu.dropdown.map((sub) => {
             return (
               <li 
-                className="sub-item" 
+                className="sub-item"
+                key={sub.id}
                 >
-                <a 
+                {/*<a
                   href= '#'
-                  className= 'sub-link'>{sub.title}</a>
+                  className= 'sub-link'>{sub.title}</a>*/}
+                <Router>
+                    <Link to={`${menu.title}/${sub.title}`}
+                          className= 'sub-link'
+                          key={sub.id}>{sub.title}
+                    </Link>
+                </Router>
               </li>
             );
           })}

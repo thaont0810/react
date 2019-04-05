@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import SubMenu from "./SubMenu2";
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 class Menu extends Component {
   constructor(props) {
@@ -25,15 +26,22 @@ class Menu extends Component {
     return (
       <div className="container">
         <ul className="nav">
-          {menus.map(menu => {
+          {menus && menus.map(menu => {
             return (
               <li
                 className="nav-item"
                 onClick={() => this.showDropDown(menu.title)}
+                key={menu.id}
               >
-                <a href="#" className="nav-link">
+                {/*<a href="#" className="nav-link">
                   {menu.title}
-                </a>
+                </a>*/}
+                <Router>
+                  <Link to={`${menu.title}`}
+                        className="nav-link"
+                        key={menu.id}>{menu.title}
+                  </Link>
+                </Router>
 
                 <SubMenu
                   menu={menu}
