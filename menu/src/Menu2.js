@@ -8,16 +8,26 @@ class Menu extends Component {
     super(props);
 
     this.state = {
-      selectedItem: ""
+      selectedItem: "",
+      showSub: false,
+      active: false
     };
     // this.showDropDown = this.showDropDown.bind(this);
   }
 
-  showDropDown(value) {
+  showDropDown = (value) => {
+    // e.preventDefault(e);
     this.setState({
-      selectedItem: value
+      selectedItem: value,
+      showSub: !this.state.showSub
     });
-  }
+  };
+
+  handleActive = () => {
+    this.setState({
+      active: !this.state.active
+    })
+  };
 
   render() {
     const { menus } = this.props;
@@ -31,23 +41,33 @@ class Menu extends Component {
               <li
                 className="nav-item"
                 onClick={() => this.showDropDown(menu.title)}
+
                 key={menu.id}
               >
-                {/*<a href="#" className="nav-link">
+                {/*<a href={`${menu.title}`}
+                   className="nav-link"
+                   key={menu.id}>
                   {menu.title}
                 </a>*/}
                 <Router>
                   <Link to={`${menu.title}`}
-                        className="nav-link"
-                        key={menu.id}>{menu.title}
+                        className={'nav-link' + (this.state.active ? ' active': '')}
+                        onClick={() => this.handleActive()}
+                  >{menu.title}
                   </Link>
                 </Router>
+                {
+                  menu && menu.dropdown ? (
+                      <SubMenu
+                          menu={menu}
+                          selectedItem={this.state.selectedItem}
+                          // showDropDown={this.showDropDown}
+                      />
+                  ) : (
+                      null
+                  )
 
-                <SubMenu
-                  menu={menu}
-                  selectedItem={this.state.selectedItem}
-                  showDropDown={this.showDropDown}
-                />
+                }
               </li>
             );
           })}

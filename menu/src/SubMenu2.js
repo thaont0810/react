@@ -15,19 +15,22 @@ class SubMenu extends Component {
     } else {
       return (
         <ul className= 'dropdown'>
-          {menu && menu.dropdown && menu.dropdown.map((sub) => {
+          {menu.dropdown.map((sub) => {
             return (
               <li 
                 className="sub-item"
                 key={sub.id}
                 >
-                {/*<a
-                  href= '#'
-                  className= 'sub-link'>{sub.title}</a>*/}
+               {/* <a
+                  href= {`${menu.title}/${sub.title}`}
+                  className= 'sub-link'
+                  key={sub.id}>
+                  {sub.title}
+                </a>*/}
                 <Router>
                     <Link to={`${menu.title}/${sub.title}`}
                           className= 'sub-link'
-                          key={sub.id}>{sub.title}
+                    >{sub.title}
                     </Link>
                 </Router>
               </li>
